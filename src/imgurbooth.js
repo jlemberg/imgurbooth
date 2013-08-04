@@ -1,4 +1,4 @@
-var imgurbooth = (function(){
+(function(){
     var $video,
         $canvas,
         context,
@@ -59,11 +59,8 @@ var imgurbooth = (function(){
         $success.show();
     }
 
-    return {
-        'init' : init
-    }
+    $(document).ready(init);
 })();
 
-$(document).ready(imgurbooth.init);
 
 
