@@ -4,7 +4,13 @@
         context,
         $button,
         $loading,
-        $success;
+        $success,
+        $countdown,
+        $countdown_number,
+        $flash,
+        $flash_overlay;
+
+    var countdownAt = 3;
 
     function init() {
         $video = $('video');
@@ -13,21 +19,43 @@
         $button = $('#captureButton');
         $loading = $('#loading');
         $success = $('#success');
+        $countdown = $('#countdown');
+        $countdown_number = $('#countdown_number');
+        $flash = $('#flash');
+        $flash_overlay = $('#flash_overlay');
 
         navigator.getMedia = ( navigator.getUserMedia || navigator.webkitGetUserMedia ||
                                navigator.mozGetUserMedia || navigator.msGetUserMedia);
         
         navigator.getMedia( {video:true}, setupVideo );
-        $button.click(capture);
+        $button.click(buttonClick);
     }
 
     function setupVideo(stream) {
         $video.attr('src', window.URL.createObjectURL(stream));
     }
 
+    function buttonClick() {
+        //$button.hide();
+        if($countdown.is(':checked')) {
+            countdown();
+        } else {
+            shutter();
+        }
+    }
+
+    function shutter() {
+        if($flash.is(':checked')) {
+            $flash_overlay.fadeIn(40, function(){
+                capture();
+                $flash_overlay.fadeOut(500);
+            });
+        } else {
+            capture();
+        }
+    }
+
     function capture() {
-        $button.hide();
-        $loading.show();
         $video.get(0).pause();
         $canvas.attr({width:$video.width(), height:$video.height()});
         context.drawImage($video.get(0), 0, 0);
@@ -35,8 +63,12 @@
     }
 
     function upload() {
+        // TODO reenable after testing
+        return;
         var headers = {};
         
+        $loading.show();
+
         $.ajax(
             'https://api.imgur.com/3/upload',
             {
@@ -51,6 +83,17 @@
                 success : success
             }
         );
+    }
+
+    function countdown() {
+        if(countdownAt == 0) {
+            $countdown_number.hide();
+            shutter();
+        } else {
+            $countdown_number.show();
+            $countdown_number.text(countdownAt--);
+            setTimeout(countdown, 1000);
+        }
     }
 
     function success(e) {
