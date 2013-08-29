@@ -36,7 +36,7 @@
     }
 
     function buttonClick() {
-        //$button.hide();
+        $button.hide();
         if($countdown.is(':checked')) {
             countdown();
         } else {
@@ -65,8 +65,6 @@
     }
 
     function upload() {
-        // TODO reenable after testing
-        return;
         var headers = {};
         
         $loading.show();
