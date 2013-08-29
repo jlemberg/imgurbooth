@@ -50,7 +50,7 @@
                 setTimeout(function(){
                     capture();
                     $flash_overlay.fadeOut(500);
-                }, 120);
+                }, 300);
             });
         } else {
             capture();
