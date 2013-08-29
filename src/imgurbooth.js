@@ -47,8 +47,10 @@
     function shutter() {
         if($flash.is(':checked')) {
             $flash_overlay.fadeIn(40, function(){
-                capture();
-                $flash_overlay.fadeOut(500);
+                setTimeout(function(){
+                    capture();
+                    $flash_overlay.fadeOut(500);
+                }, 120);
             });
         } else {
             capture();
