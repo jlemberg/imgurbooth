@@ -52,7 +52,7 @@
                 setTimeout(function(){
                     capture();
                     $flash_overlay.fadeOut(500);
-                }, 120);
+                }, 300);
             });
         } else {
             capture();
@@ -67,8 +67,6 @@
     }
 
     function upload() {
-        // TODO reenable after testing
-        return;
         var headers = {};
         
         $loading.show();
