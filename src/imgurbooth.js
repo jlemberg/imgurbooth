@@ -8,7 +8,8 @@
         $countdown,
         $countdown_number,
         $flash,
-        $flash_overlay;
+        $flash_overlay,
+        $hideme;
 
     var countdownAt = 3;
 
@@ -23,6 +24,7 @@
         $countdown_number = $('#countdown_number');
         $flash = $('#flash');
         $flash_overlay = $('#flash_overlay');
+        $hideme = $('#hideme');
 
         navigator.getMedia = ( navigator.getUserMedia || navigator.webkitGetUserMedia ||
                                navigator.mozGetUserMedia || navigator.msGetUserMedia);
@@ -36,7 +38,7 @@
     }
 
     function buttonClick() {
-        //$button.hide();
+        $hideme.hide();
         if($countdown.is(':checked')) {
             countdown();
         } else {
