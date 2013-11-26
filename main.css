@@ -62,8 +62,13 @@ label {
     text-shadow: 0px 0px 10px #000;
 }
 #loading,
-canvas,
+/*canvas,*/
 #success {
     display:none;
 }
-
+canvas {
+    border: 1px solid white;
+}
+#gifoutput {
+    border: 1px solid red;
+}

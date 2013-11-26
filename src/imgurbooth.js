@@ -7,9 +7,11 @@
         $success,
         $countdown,
         $countdown_number,
-        $flash,
-        $flash_overlay,
-        $hideme;
+        $seconds,
+        $hideme,
+        encoder,
+        currentFrame,
+        $gifOutput;
 
     var countdownAt = 3;
 
@@ -22,9 +24,15 @@
         $success = $('#success');
         $countdown = $('#countdown');
         $countdown_number = $('#countdown_number');
-        $flash = $('#flash');
-        $flash_overlay = $('#flash_overlay');
+        $seconds = $('#seconds');
         $hideme = $('#hideme');
+        $canvas.attr('width', 320);
+        $canvas.attr('height', 240);
+        $gifOutput = $('#gifoutput');
+        encoder = new GIFEncoder();
+        currentFrame = 0;
+
+        encoder.setRepeat(0);
 
         navigator.getMedia = ( navigator.getUserMedia || navigator.webkitGetUserMedia ||
                                navigator.mozGetUserMedia || navigator.msGetUserMedia);
@@ -47,26 +55,33 @@
     }
 
     function shutter() {
-        if($flash.is(':checked')) {
-            $flash_overlay.fadeIn(40, function(){
-                setTimeout(function(){
-                    capture();
-                    $flash_overlay.fadeOut(500);
-                }, 300);
-            });
+        encoder.setDelay(50);
+        encoder.start();
+        frame();
+    }
+
+    function frame() {
+
+        context.drawImage($video.get(0), 0, 0, 640, 480, 0, 0, 320, 240);
+        encoder.addFrame(context);
+
+        if(++currentFrame == 15) {
+            encoder.finish();
+            upload();
         } else {
-            capture();
+            setTimeout(frame, 100);
         }
     }
 
-    function capture() {
-        $video.get(0).pause();
-        $canvas.attr({width:$video.width(), height:$video.height()});
-        context.drawImage($video.get(0), 0, 0);
-        upload();
-    }
-
     function upload() {
+        console.log("would upload now, but won't"); 
+        var binary_gif = encoder.stream().getData();
+        var data_url = 'data:image/gif;base64,'+encode64(binary_gif);
+        $gifOutput.attr('src', data_url);
+
+        return;
+
+
         var headers = {};
         
         $loading.show();

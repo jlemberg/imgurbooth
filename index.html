@@ -3,10 +3,14 @@
         <title>imgurbooth</title>
         <link rel="stylesheet" type="text/css" href="main.css" />
         <script type="text/javascript" src="lib/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript" src="lib/LZWEncoder.js"></script>
+        <script type="text/javascript" src="lib/NeuQuant.js"></script>
+        <script type="text/javascript" src="lib/GIFEncoder.js"></script>
+        <script type="text/javascript" src="lib/b64.js"></script>
+
         <script type="text/javascript" src="src/imgurbooth.js"></script>
     </head>
     <body>
-        <div id="flash_overlay"></div>
         <div id="wrapper">
             <a href="https://github.com/jlemberg/imgurbooth" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
             <h1>imgur<span>booth</span></h1>
@@ -15,8 +19,8 @@
                 <video width="640" height="480" autoplay></video>
             </div>
             <div id="hideme">
-                <input id="countdown" type="checkbox" value="1" checked><label for="countdown">Countdown</label>    
-                <input id="flash" type="checkbox" value="1" checked><label for="flash">Flash</label><br />
+                <input id="countdown" type="checkbox" value="1"><label for="countdown">Countdown</label>    
+                <input id="seconds" type="text" value="3" /><label for="seconds">Length</label><br />
                 <input id="captureButton" type="button" value="Capture" /><br />
             </div>
             <span id="loading">Uploading...</span>
@@ -24,6 +28,7 @@
                 All done! <a target="_blank" href="">Here's your image!</a>
             </span>
             <canvas></canvas>
+            <img id="gifoutput" width="320" height="240">
         </div>
     </body>
 </html>
